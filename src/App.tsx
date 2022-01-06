@@ -195,14 +195,22 @@ export const App = () => {
         <option value="unchecked">現在のタスク</option>
         <option value="removed">ごみ箱</option>
       </select>
-      {/* コールバックとして () => handleOnSubmit() を渡す */}
-      {/* enter押下時のevent設定（submit） */}
+
+      {/*フィルターでゴミ箱の時のみ完全削除機能を表示 */}
+      {filter === 'removed' ? (
+        <button onClick={() => console.log('remove all')}>
+          ゴミ箱を空にする
+        </button>
+      ) : (
+        
+      // コールバックとして () => handleOnSubmit() を渡す
+      // enter押下時のevent設定（submit）
       <form onSubmit={(e) => {
           e.preventDefault();
           handleOnSubmit();
         }}
       >
-        {/*
+        {/*         
           入力中テキストの値を text ステートが
           持っているのでそれを value として表示
           onChange イベント（＝入力テキストの変化）を
@@ -214,7 +222,12 @@ export const App = () => {
         <input 
           type="text" 
           value={text} 
-          disabled={filter === 'checked' || filter === 'removed'}
+          
+          /**
+           * 上記で条件分岐しているので入力フォームが描画される場合には 
+           * filter === 'removed' という状態が発生し得ない
+          */
+          disabled={filter === 'checked'}
           onChange={(e) => handleOnChange(e)} 
         />
 
@@ -222,11 +235,12 @@ export const App = () => {
         <input
           type="submit"
           value="追加"
-          disabled={filter === 'checked' || filter === 'removed'}
+          disabled={filter === 'checked'}
           onSubmit={handleOnSubmit}
         />
       </form>
 
+      )}
       {/* Todoリスト一覧の表示 */}
       {/* Reactが<li>をrenderするためにはTodos内のTodo各々の変更を検知するための'key'をliに追加する必要がある(keyはReactでの予約済みプロパティ)*/}
       <ul>
