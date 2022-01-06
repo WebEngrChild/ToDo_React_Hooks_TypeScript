@@ -183,7 +183,17 @@ export const App = () => {
       }
     });
 
-    //以下が描画される部分
+    const handleOnEmpty = () => {
+      /**
+       * Todo 型オブジェクト内のプロパティを編集するわけではない
+       * したがってイミュータビリティには影響がない
+       * シャローコピーで事足りる
+       */ 
+      const newTodos = todos.filter((todo) => !todo.removed);
+      setTodos(newTodos);
+    };
+
+    //以下が関数コンポーネントで描画される部分
     return (
     <div>
       <select 
@@ -198,9 +208,13 @@ export const App = () => {
 
       {/*フィルターでゴミ箱の時のみ完全削除機能を表示 */}
       {filter === 'removed' ? (
-        <button onClick={() => console.log('remove all')}>
+        <button
+           onClick={handleOnEmpty}
+           disabled={todos.filter((todo) => todo.removed).length === 0}
+        >
           ゴミ箱を空にする
         </button>
+        
       ) : (
         
       // コールバックとして () => handleOnSubmit() を渡す
