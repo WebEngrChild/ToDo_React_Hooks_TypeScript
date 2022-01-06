@@ -9,6 +9,9 @@ type Todo = {
   removed: boolean;
 };
 
+//フィルターの状態をあらわす Filter 型
+type Filter = 'all' | 'checked' | 'unchecked' | 'removed';
+
 //関数コンポーネントAppを定義
 export const App = () => {
   /**
@@ -19,8 +22,10 @@ export const App = () => {
 
     //フックの定義
     const [text, setText] = useState('');
-    // Todo 型オブジェクト群の配列を代入するため明示的にアノテート
+    // Todo 型オブジェクト群の配列を代入するため明示的にアノテート(初期値は空配列)
     const [todos, setTodos] = useState<Todo[]>([]);
+    //フィルター型として現在のフィルター状態を格納(初期値はall)
+    const [filter, setFilter] = useState<Filter>('all');
 
     // 関数：inputのtextステートを更新(コールバックのe部分に型定義を行っている)
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -157,12 +162,42 @@ export const App = () => {
       setTodos(newTodos);
     };
 
+    //関数：フィルタリング後の Todo 型の配列をリスト表示
+    const filteredTodos = todos.filter((todo) => {
+      // filter ステートの値に応じて異なる内容の配列を返す
+      switch (filter) {
+        case 'all':
+          // 削除されていないもの全て
+          return !todo.removed;
+        case 'checked':
+          // 完了済 **かつ** 削除されていないもの
+          return todo.checked && !todo.removed;
+        case 'unchecked':
+          // 未完了 **かつ** 削除されていないもの
+          return !todo.checked && !todo.removed;
+        case 'removed':
+          // 削除済みのもの
+          return todo.removed;
+        default:
+          return todo;
+      }
+    });
+
+    //以下が描画される部分
     return (
     <div>
+      <select 
+        defaultValue="all" 
+        // switch文での型による補完を受けるためfilter型としている
+        onChange={(e) => setFilter(e.target.value as Filter)}>
+        <option value="all">すべてのタスク</option>
+        <option value="checked">完了したタスク</option>
+        <option value="unchecked">現在のタスク</option>
+        <option value="removed">ごみ箱</option>
+      </select>
       {/* コールバックとして () => handleOnSubmit() を渡す */}
       {/* enter押下時のevent設定（submit） */}
-      <form
-        onSubmit={(e) => {
+      <form onSubmit={(e) => {
           e.preventDefault();
           handleOnSubmit();
         }}
@@ -176,16 +211,26 @@ export const App = () => {
           
         {/* テキスト入力時のevent設定（onchange） */} 
         {/* onChange={(e) => setText(e.target.value)} ※jsx直接記述例→propsが扱いにくいのでNG */}
-        <input type="text" value={text} onChange={(e) => handleOnChange(e)} />
+        <input 
+          type="text" 
+          value={text} 
+          disabled={filter === 'checked' || filter === 'removed'}
+          onChange={(e) => handleOnChange(e)} 
+        />
 
         {/* 追加ボタン押下時のevent設定（submit） */}
-        <input type="submit" value="追加" onSubmit={handleOnSubmit} />
+        <input
+          type="submit"
+          value="追加"
+          disabled={filter === 'checked' || filter === 'removed'}
+          onSubmit={handleOnSubmit}
+        />
       </form>
 
       {/* Todoリスト一覧の表示 */}
       {/* Reactが<li>をrenderするためにはTodos内のTodo各々の変更を検知するための'key'をliに追加する必要がある(keyはReactでの予約済みプロパティ)*/}
       <ul>
-        {todos.map((todo) => {
+        {filteredTodos.map((todo) => {
           return (
             <li key={todo.id}>
               <input
