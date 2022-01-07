@@ -14,11 +14,6 @@ type Filter = 'all' | 'checked' | 'unchecked' | 'removed';
 
 //関数コンポーネントAppを定義
 export const App = () => {
-  /**
-   * text = ステートの値
-   * setText = ステートの値を更新するメソッド
-   * useState の引数 = ステートの初期値 (=空の文字列)
-   */
 
     //フックの定義
     const [text, setText] = useState('');
@@ -45,24 +40,7 @@ export const App = () => {
         removed: false,
       };
 
-      /**
-       * スプレッド構文を用いて todos ステートのコピーへ newTodo を追加する
-       * 以下と同義
-       * const oldTodos = todos.slice(); //配列の複製
-       * oldTodos.unshift(newTodo); //配列に新規todoを追加
-       * setTodos(oldTodos); //ステートに新しいtodo配列を追加する
-       *
-       **/
-
-      /**
-       * setTodosの引数には配列内にobjectが格納
-       * ...todosでobjectのみを展開
-       * newTodoはもともとオブジェクト型
-       * objectで配列内にobjectが並ぶ形に変化
-       * 新しくコピーした配列[]を準備
-       * 配列の要素"そのもの"の追加である＝シャローコピーでもイミュータブルを維持
-       */
-
+      //ステートに値を追加
       setTodos([newTodo, ...todos]);
 
       // フォームへの入力をクリアする
@@ -71,30 +49,7 @@ export const App = () => {
 
     //関数：登録済みTodoの編集
     const handleOnEdit = (id: number, value: string) => {
-      /**
-       * ディープコピー:
-       * オブジェクトが内抱している各要素をスプレッド構文で展開
-       * obj内のpropatyを展開して{オブジェクト}としている
-       */
       const deepCopy = todos.map((todo) => ({ ...todo }));
-
-      /**
-       * 上記でディープコピーした内容に対してArray.map() を適用
-       * 新しい配列を再生成する
-       * 
-       * 以下と同義:
-       * const deepCopy = todos.map((todo) => ({
-       *   value: todo.value,
-       *   id: todo.id,
-       * }));
-       */
-
-
-      /**
-       * 引数として渡された todo の id が一致する
-       * todos ステート（のコピー）内の todo の
-       * value プロパティを引数 value (= e.target.value) に書き換える
-       */
       const newTodos = deepCopy.map((todo) => {
         if (todo.id === id) {
           todo.value = value;
@@ -102,38 +57,7 @@ export const App = () => {
         return todo;
       });
 
-      // todos ステート配列をチェック（あとでコメントアウト）
-      console.log('=== Original todos ===');
-      todos.map((todo) => console.log(`id: ${todo.id}, value: ${todo.value}`));
-
       setTodos(newTodos);
-
-      /**
-      * 以下のタイミングではtodosに変化しない
-      * 同じ関数のスコープ内では、関数のスコープ外の値を更新することはできない。
-      * setTodosはスコープ外等別の場所に存在するステートの値を変更する。
-      */
-      console.log('=== expecter updated todos but not true ===');
-      todos.map((todo) => console.log(`id: ${todo.id}, value: ${todo.value}`));
-
-
-      /**
-       * オブジェクトが複数入れ子になっている構造には注意が必要
-       * 以下のようなmapの結果を配列に形はシャローコピー
-       * 配列の要素内の子要素のプロパティの変更である
-       * 入れ子の中身は依然として原本の要素を参照し続ける
-       * 結果、setTodoでステートを更新する前にすでに変化する＝'Imutable'でない
-       */
-
-      // const newTodos = todos.map((todo) => {
-      //   if (todo.id === id) {
-      //     todo.value = value;
-      //     }
-      //   return todo;
-      // });
-      // console.log('=== Original todos ===');
-      // todos.map((todo) => console.log(`id: ${todo.id}, value: ${todo.value}`));
-      // setTodos(newTodos);
     };
 
     //関数：checkbox時のcallback
@@ -183,17 +107,13 @@ export const App = () => {
       }
     });
 
+    //関数：ゴミ箱を空にする
     const handleOnEmpty = () => {
-      /**
-       * Todo 型オブジェクト内のプロパティを編集するわけではない
-       * したがってイミュータビリティには影響がない
-       * シャローコピーで事足りる
-       */ 
       const newTodos = todos.filter((todo) => !todo.removed);
       setTodos(newTodos);
     };
 
-    //以下が関数コンポーネントで描画される部分
+    //関数コンポーネント:HTMLの描画
     return (
     <div>
       <select 
@@ -206,7 +126,7 @@ export const App = () => {
         <option value="removed">ごみ箱</option>
       </select>
 
-      {/*フィルターでゴミ箱の時のみ完全削除機能を表示 */}
+      {/*フィルターでゴミ箱の時のみ完全削除機能を表示（三項演算子） */}
       {filter === 'removed' ? (
         <button
            onClick={handleOnEmpty}
@@ -217,30 +137,16 @@ export const App = () => {
         
       ) : (
         
-      // コールバックとして () => handleOnSubmit() を渡す
-      // enter押下時のevent設定（submit）
+      // フォーム：enter押下時のevent設定（submit）
       <form onSubmit={(e) => {
           e.preventDefault();
           handleOnSubmit();
         }}
       >
-        {/*         
-          入力中テキストの値を text ステートが
-          持っているのでそれを value として表示
-          onChange イベント（＝入力テキストの変化）を
-          text ステートに更新
-          */}
-          
-        {/* テキスト入力時のevent設定（onchange） */} 
-        {/* onChange={(e) => setText(e.target.value)} ※jsx直接記述例→propsが扱いにくいのでNG */}
+        {/* テキスト入力 */}
         <input 
           type="text" 
           value={text} 
-          
-          /**
-           * 上記で条件分岐しているので入力フォームが描画される場合には 
-           * filter === 'removed' という状態が発生し得ない
-          */
           disabled={filter === 'checked'}
           onChange={(e) => handleOnChange(e)} 
         />
