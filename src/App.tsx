@@ -12,13 +12,47 @@ type Todo = {
 //フィルターの状態をあらわす Filter 型
 type Filter = 'all' | 'checked' | 'unchecked' | 'removed';
 
+//デフォルトの値
+const initialTodos: Todo[] = [
+  {
+    value: 'TODO #5',
+    id: 4,
+    checked: false,
+    removed: false,
+  },
+  {
+    value: 'TODO #4',
+    id: 3,
+    checked: true,
+    removed: false,
+  },
+  {
+    value: 'TODO #3',
+    id: 2,
+    checked: false,
+    removed: true,
+  },
+  {
+    value: 'TODO #2',
+    id: 1,
+    checked: true,
+    removed: true,
+  },
+  {
+    value: 'TODO #1',
+    id: 0,
+    checked: false,
+    removed: false,
+  },
+];
+
 //関数コンポーネントAppを定義
 export const App = () => {
 
     //フックの定義
     const [text, setText] = useState('');
-    // Todo 型オブジェクト群の配列を代入するため明示的にアノテート(初期値は空配列)
-    const [todos, setTodos] = useState<Todo[]>([]);
+    // Todo 型オブジェクト群の配列を代入するため明示的にアノテート(初期値はinitialTodos)
+    const [todos, setTodos] = useState<Todo[]>(initialTodos);
     //フィルター型として現在のフィルター状態を格納(初期値はall)
     const [filter, setFilter] = useState<Filter>('all');
 
