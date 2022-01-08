@@ -9,25 +9,21 @@ import { Selector } from './components/Selector';
 import { EmptyButton } from './components/EmptyButton';
 import { FilteredTodos } from './components/FilteredTodos';
 
+//Contextをインポートする
+import { AppContext } from './AppContext';
+
 //HTML要素（JSX）を返却
-export const App = (): JSX.Element => {
-  //状態管理のuseReducerを定義
+export const App = () => {
+  // 状態管理のuseReducerを定義
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  /**
-   * 各関数componentに状態更新用のdispatchを渡す
-   * propsで渡すことで各関数componentで状態を更新することができる
-   * 関数componentをmemo化することで処理を高速化(更新がなければ再計算不要)
-   */
   return (
-    <div>
-      <Selector dispatch={dispatch} />
-      {state.filter === 'removed' ? (
-        <EmptyButton dispatch={dispatch} />
-      ) : (
-        <Form state={state} dispatch={dispatch} />
-      )}
-      <FilteredTodos state={state} dispatch={dispatch} />
-    </div>
+    <AppContext.Provider value={{ state, dispatch }}>
+      <div>
+        <Selector />
+        {state.filter === 'removed' ? <EmptyButton /> :  <Form /> }
+        <FilteredTodos />
+      </div>
+    </AppContext.Provider>
   );
 };
