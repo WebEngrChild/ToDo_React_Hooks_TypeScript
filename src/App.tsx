@@ -17,6 +17,7 @@ type Filter = 'all' | 'checked' | 'unchecked' | 'removed';
 
 //関数コンポーネントAppを定義
 export const App = () => {
+  //useReducerを定義
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
