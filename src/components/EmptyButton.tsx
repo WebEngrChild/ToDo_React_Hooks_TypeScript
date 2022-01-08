@@ -2,7 +2,7 @@ import { memo, useContext } from 'react';
 import { AppContext } from '../AppContext';
 
 export const EmptyButton = memo(() => {
-  const { state, dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
   const handleOnEmpty = () => {
     dispatch({ type: 'empty' });
   };

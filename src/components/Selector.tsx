@@ -2,7 +2,7 @@ import { memo, useContext } from 'react';
 import { AppContext } from '../AppContext';
 
 export const Selector = memo(() => {
-  const { state, dispatch } = useContext(AppContext);
+  const { dispatch } = useContext(AppContext);
   const handleOnFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: 'filter', filter: e.target.value as Filter });
   };
