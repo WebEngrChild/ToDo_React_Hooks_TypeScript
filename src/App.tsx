@@ -169,6 +169,7 @@ export const App = () => {
             <li key={todo.id}>
               <input
                 type="checkbox"
+                disabled={todo.removed}
                 checked={todo.checked}
                 onChange={() => handleOnCheck(todo.id, todo.checked)}
               />
