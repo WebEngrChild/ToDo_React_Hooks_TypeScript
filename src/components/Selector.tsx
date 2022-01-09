@@ -3,6 +3,19 @@ import { memo, useContext } from 'react';
 //型アサーションファイルをインポート
 import { AppContext } from '../AppContext';
 
+/**
+ * Contextを用いないでpropsでやりとりする場合
+ * 親コンポーネント側：
+ * 要素の属性に設定するとコンポーネントに渡せる
+    <Selector dispatch={dispatch} />
+ *
+ * 子コンポーネント側：
+ * Propsの定義：
+    type Props = {
+    dispatch: Dispatch<Action>;
+    };
+ */
+
 export const Selector = memo(() => {
   /**
    * useContextメソッドに型アサーションを渡す
