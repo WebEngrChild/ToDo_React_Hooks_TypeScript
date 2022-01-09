@@ -1,7 +1,14 @@
+//ReactモジュールからmemoとuseContextをインポート
 import { memo, useContext } from 'react';
+//型アサーションファイルをインポート
 import { AppContext } from '../AppContext';
 
 export const Selector = memo(() => {
+  /**
+   * useContextメソッドに型アサーションを渡す
+   * 分割代入→dispatchプロパティを指定して定数に代入
+   * <AppContext.Provider value={{ state, dispatch }} />が利用できるようになる
+   */
   const { dispatch } = useContext(AppContext);
   const handleOnFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: 'filter', filter: e.target.value as Filter });

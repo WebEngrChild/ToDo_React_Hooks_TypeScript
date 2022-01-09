@@ -12,7 +12,6 @@ import { FilteredTodos } from './components/FilteredTodos';
 //Contextをインポートする
 import { AppContext } from './AppContext';
 
-//HTML要素（JSX）を返却
 export const App = () => {
   // 状態管理のuseReducerを定義
   const [state, dispatch] = useReducer(reducer, initialState);
