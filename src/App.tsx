@@ -130,6 +130,7 @@ export const App = () => {
       {filter === 'removed' ? (
         <button
            onClick={handleOnEmpty}
+           //ToDosの中の削除フラグが無い数を数えてそれが0であればdisabledを0のままにしておく
            disabled={todos.filter((todo) => todo.removed).length === 0}
         >
           ゴミ箱を空にする
@@ -139,6 +140,7 @@ export const App = () => {
         
       // フォーム：enter押下時のevent設定（submit）
       <form onSubmit={(e) => {
+        //これにより画面遷移を抑えて既存ページにタスクが表示されるままになるように設定
           e.preventDefault();
           handleOnSubmit();
         }}
