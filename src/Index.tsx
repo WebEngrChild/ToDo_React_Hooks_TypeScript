@@ -12,7 +12,7 @@ import { FilteredTodos } from './components/FilteredTodos';
 //Contextをインポートする
 import { AppContext } from './AppContext';
 
-export const App = () => {
+export const Index = () => {
   // 状態管理のuseReducerを定義
   const [state, dispatch] = useReducer(reducer, initialState);
 
