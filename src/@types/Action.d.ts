@@ -1,3 +1,4 @@
+//@typesと宣言することでプロジェクト内で型を利用することができる
 declare type Action =
   | { type: 'change'; text: string }
   | { type: 'filter'; filter: Filter }

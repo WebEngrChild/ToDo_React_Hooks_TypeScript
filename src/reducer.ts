@@ -1,12 +1,15 @@
 /**
- * reducerの実行である"dispatch(action)で呼び出される
+ * reducerの実行である"dispatch(action)で呼び出される関数本体
  * dispatch({ type: 'change', text: e.target.value });
  * 第一引数はこのモジュール内で利用するstate
  * 第二引数はdispatchで渡されるactionを別ファイルで定義されるActionで型定義
  */
+
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
+    //textはinput入力値
     case 'change': {
+      //分割代入を行なってstateの該当箇所のみに更新をかけている
       return { ...state, text: action.text };
     }
 
@@ -60,6 +63,7 @@ export const reducer = (state: State, action: Action): State => {
     }
 
     case 'submit': {
+      //返り値はstateに制限しているため例外処理では何も変化がないというstateをそのまま返している
       if (!state.text) return state;
 
       const newTodo: Todo = {

@@ -16,11 +16,13 @@ import { AppContext } from '../AppContext';
     };
  */
 
+//コンポーネントを memo 化すると props に変化がない限り再計算されないため、パフォーマンスが向上する
 export const Selector = memo(() => {
   /**
-   * useContextメソッドに型アサーションを渡す
-   * 分割代入→dispatchプロパティを指定して定数に代入
    * <AppContext.Provider value={{ state, dispatch }} />が利用できるようになる
+   * useContextメソッドにAppContext(型アサーション)を渡す
+   * useContext(AppContext);の結果はオブジェクト群になるはず
+   * const { dispatch } は分割代入→dispatchプロパティを指定して定数に代入
    */
   const { dispatch } = useContext(AppContext);
   const handleOnFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {

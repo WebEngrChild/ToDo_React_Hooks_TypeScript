@@ -14,6 +14,7 @@ import { AppContext } from './AppContext';
 
 export const Index = () => {
   // 状態管理のuseReducerを定義
+  //初期値のinitialStateをstatenに代入している
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
