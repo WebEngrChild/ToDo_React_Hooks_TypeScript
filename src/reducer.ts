@@ -1,7 +1,10 @@
 /**
  * reducerの実行である"dispatch(action)で呼び出される関数本体
  * dispatch({ type: 'change', text: e.target.value });
- * 第一引数はこのモジュール内で利用するstate
+*/
+ 
+/**
+ * 第一引数はこのモジュール内で利用する全体state（text, todos, filter）
  * 第二引数はdispatchで渡されるactionを別ファイルで定義されるActionで型定義
  */
 
@@ -63,7 +66,7 @@ export const reducer = (state: State, action: Action): State => {
     }
 
     case 'submit': {
-      //返り値はstateに制限しているため例外処理では何も変化がないというstateをそのまま返している
+      //返り値はstateに制限しているため例外処理では何も変化がなく全体stateをそのまま返している
       if (!state.text) return state;
 
       const newTodo: Todo = {
