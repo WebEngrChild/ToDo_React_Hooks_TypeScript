@@ -2,6 +2,11 @@
 import { createContext, Dispatch } from 'react';
 
 /**
+ * contextを作成する -> createContext
+ * contextを利用する -> useContext
+ */ 
+
+/**
  * <AppContext.Provider value={{ state, dispatch }}>を用いることで
  * propsを利用しなくても各component内でstateとdispatchを利用することができる
  * 引数は空オブジェクトかつ型定義を行なっている
