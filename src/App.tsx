@@ -109,6 +109,7 @@ export const App = () => {
 
     //関数：ゴミ箱を空にする
     const handleOnEmpty = () => {
+      // 削除されていないものだけをフィルタリングする
       const newTodos = todos.filter((todo) => !todo.removed);
       setTodos(newTodos);
     };
