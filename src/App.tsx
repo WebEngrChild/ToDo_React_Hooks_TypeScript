@@ -131,7 +131,7 @@ export const App = () => {
       {filter === 'removed' ? (
         <button
            onClick={handleOnEmpty}
-           //ToDosの中の削除フラグが無い数を数えてそれが0であればdisabledを0のままにしておく
+           //ToDosの中の削除済みフィルターを数えてそれが0であればdisabledを0のままにしておく
            disabled={todos.filter((todo) => todo.removed).length === 0}
         >
           ゴミ箱を空にする
