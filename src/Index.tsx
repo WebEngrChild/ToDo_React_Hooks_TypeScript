@@ -4,20 +4,21 @@ import { reducer } from './reducer';
 import { initialState } from './initialState';
 
 //各componentをインポート
-import { Form } from './components/Form';
 import { Selector } from './components/Selector';
 import { EmptyButton } from './components/EmptyButton';
+import { Form } from './components/Form';
 import { FilteredTodos } from './components/FilteredTodos';
 
 //Contextをインポートする
 import { AppContext } from './AppContext';
 
 export const Index = () => {
-  // 状態管理のuseReducerを定義
+  //状態管理のuseReducerを定義
   //初期値のinitialStateをstatenに代入している
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
+    // 各component配下にstateとdispatchを渡す
     <AppContext.Provider value={{ state, dispatch }}>
       <div>
         <Selector />

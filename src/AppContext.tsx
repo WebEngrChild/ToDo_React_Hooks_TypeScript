@@ -9,7 +9,7 @@ import { createContext, Dispatch } from 'react';
 /**
  * <AppContext.Provider value={{ state, dispatch }}>を用いることで
  * propsを利用しなくても各component内でstateとdispatchを利用することができる
- * 引数は空オブジェクトかつ型定義を行なっている
+ * 引数は空オブジェクトに型アサーションをしている
  */ 
 export const AppContext = createContext(
   {} as { state: State; dispatch: Dispatch<Action> }
