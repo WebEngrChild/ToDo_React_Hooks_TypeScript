@@ -2,15 +2,12 @@
 import { createContext, Dispatch } from 'react';
 
 /**
- * contextを作成する -> createContext
- * contextを利用する -> useContext
+ * ①contextを作成する -> createContext({} as { state: State; dispatch: Dispatch<Action> }
+ *  ※空のオブジェクトにasでアサーションを行う
+ * ②<AppContext.Provider value={{ state, dispatch }}>でラップして各コンポーネントに渡す
+ * ③contextを利用する -> const { dispatch } = useContext(AppContext);
  */ 
 
-/**
- * <AppContext.Provider value={{ state, dispatch }}>を用いることで
- * propsを利用しなくても各component内でstateとdispatchを利用することができる
- * 引数は空オブジェクトに型アサーションをしている
- */ 
 export const AppContext = createContext(
   {} as { state: State; dispatch: Dispatch<Action> }
 );
