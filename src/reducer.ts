@@ -1,6 +1,7 @@
 /**
  * reducerの実行である"dispatch(action)で呼び出される関数本体
  * dispatch({ type: 'change', text: e.target.value });
+ * 実行される際にstateは自動的に渡される？
 */
  
 /**
