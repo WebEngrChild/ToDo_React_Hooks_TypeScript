@@ -77,6 +77,7 @@ export const reducer = (state: State, action: Action): State => {
         removed: false,
       };
 
+      // text=入力値はブランクにリセットしている
       return { ...state, todos: [newTodo, ...state.todos], text: '' };
     }
 
