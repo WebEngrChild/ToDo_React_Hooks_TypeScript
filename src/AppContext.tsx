@@ -6,6 +6,7 @@ import { createContext, Dispatch } from 'react';
  *  ※空のオブジェクトにasでアサーションを行う
  * ②<AppContext.Provider value={{ state, dispatch }}>でラップして各コンポーネントに渡す
  * ③contextを利用する -> const { dispatch } = useContext(AppContext);
+ *  ※①を引数にすることで分割代入
  */ 
 
 export const AppContext = createContext(
